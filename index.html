@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador Académico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000; /* Fondo negro */
+            color: #ffffff; /* Texto blanco */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px; /* Agregar padding para que el contenedor no toque los bordes del viewport */
+            overflow: hidden; /* Ocultar posibles desbordamientos */
+            position: relative; /* Para el efecto de transición */
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            background-color: #000000; /* Fondo negro */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 100%;
+            max-width: 400px; /* Ancho máximo del contenedor */
+            position: relative;
+            z-index: 2; /* Asegurarse de que el contenedor esté por encima del overlay */
+        }
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffffff; /* Logo blanco */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .input-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            position: relative;
+        }
+        .label {
+            font-size: 15px;
+            padding-left: 10px;
+            position: absolute;
+            top: 13px;
+            transition: 0.3s;
+            pointer-events: none;
+            color: #ffffff; /* Etiqueta blanca */
+        }
+        .input {
+            width: 100%;
+            height: 45px;
+            border: none;
+            outline: none;
+            padding: 0px 7px;
+            border-radius: 6px;
+            color: #ffffff; /* Texto de la barra de búsqueda blanco */
+            font-size: 15px;
+            background-color: transparent;
+            box-shadow: 3px 3px 10px rgba(0,0,0,1), -1px -1px 6px rgba(255, 255, 255, 0.4);
+        }
+        .input:focus {
+            border: 2px solid transparent;
+            color: #ffffff;
+            box-shadow: 3px 3px 10px rgba(0,0,0,1), -1px -1px 6px rgba(255, 255, 255, 0.4),
+                inset 3px 3px 10px rgba(0,0,0,1), inset -1px -1px 6px rgba(255, 255, 255, 0.4);
+        }
+        .input:valid ~ .label,
+        .input:focus ~ .label {
+            transition: 0.3s;
+            padding-left: 2px;
+            transform: translateY(-35px);
+        }
+        .input:valid,
+        .input:focus {
+            box-shadow: 3px 3px 10px rgba(0,0,0,1), -1px -1px 6px rgba(255, 255, 255, 0.4),
+                inset 3px 3px 10px rgba(0,0,0,1), inset -1px -1px 6px rgba(255, 255, 255, 0.4);
+        }
+        .search-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            align-items: center; /* Centrar el botón */
+        }
+        .search-bar button {
+            width: 165px;
+            height: 62px;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 17px;
+            border-radius: 1rem;
+            border: none;
+            position: relative;
+            background: #000000; /* Botón negro */
+            overflow: hidden; /* Para el efecto de borde */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .search-bar button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0));
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 0;
+        }
+        .search-bar button:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .search-bar button span {
+            position: relative;
+            z-index: 1;
+        }
+        .search-bar button:active {
+            transform: scale(0.9) rotate(3deg);
+        }
+        /* Transición mágica blanca */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8); /* Blanco semi-transparente */
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1;
+            transition: opacity 0.7s ease; /* Transición más suave */
+        }
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    <div class="container">
+        <div class="logo">A S C L E P I O</div>
+        <div class="input-container">
+            <input type="text" id="searchInput" class="input" required>
+            <label for="searchInput" class="label">Buscar en Google Académico</label>
+        </div>
+        <div class="search-bar">
+            <button onclick="search()"><span>Buscar</span></button>
+        </div>
+    </div>
+
+    <script>
+        function search() {
+            var query = document.getElementById('searchInput').value;
+            var searchUrl = 'https://scholar.google.com/scholar?q=' + encodeURIComponent(query);
+            // Mostrar el overlay antes de redirigir
+            var overlay = document.getElementById('overlay');
+            overlay.classList.add('active');
+            setTimeout(function() {
+                window.open(searchUrl, '_blank');
+            }, 700); // Tiempo de transición del overlay
+        }
+    </script>
+</body>
+</html>
