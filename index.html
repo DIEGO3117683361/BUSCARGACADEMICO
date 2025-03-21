@@ -1,175 +1,237 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador Académico</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #000000; /* Fondo negro */
-            color: #ffffff; /* Texto blanco */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            padding: 20px; /* Agregar padding para que el contenedor no toque los bordes del viewport */
-            overflow: hidden; /* Ocultar posibles desbordamientos */
-            position: relative; /* Para el efecto de transición */
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            justify-content: center;
-            align-items: center;
-            background-color: #000000; /* Fondo negro */
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            width: 100%;
-            max-width: 400px; /* Ancho máximo del contenedor */
-            position: relative;
-            z-index: 2; /* Asegurarse de que el contenedor esté por encima del overlay */
-        }
-        .logo {
-            font-size: 2em;
-            font-weight: bold;
-            color: #ffffff; /* Logo blanco */
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .input-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-            position: relative;
-        }
-        .label {
-            font-size: 15px;
-            padding-left: 10px;
-            position: absolute;
-            top: 13px;
-            transition: 0.3s;
-            pointer-events: none;
-            color: #ffffff; /* Etiqueta blanca */
-        }
-        .input {
-            width: 100%;
-            height: 45px;
-            border: none;
-            outline: none;
-            padding: 0px 7px;
-            border-radius: 6px;
-            color: #ffffff; /* Texto de la barra de búsqueda blanco */
-            font-size: 15px;
-            background-color: transparent;
-            box-shadow: 3px 3px 10px rgba(0,0,0,1), -1px -1px 6px rgba(255, 255, 255, 0.4);
-        }
-        .input:focus {
-            border: 2px solid transparent;
-            color: #ffffff;
-            box-shadow: 3px 3px 10px rgba(0,0,0,1), -1px -1px 6px rgba(255, 255, 255, 0.4),
-                inset 3px 3px 10px rgba(0,0,0,1), inset -1px -1px 6px rgba(255, 255, 255, 0.4);
-        }
-        .input:valid ~ .label,
-        .input:focus ~ .label {
-            transition: 0.3s;
-            padding-left: 2px;
-            transform: translateY(-35px);
-        }
-        .input:valid,
-        .input:focus {
-            box-shadow: 3px 3px 10px rgba(0,0,0,1), -1px -1px 6px rgba(255, 255, 255, 0.4),
-                inset 3px 3px 10px rgba(0,0,0,1), inset -1px -1px 6px rgba(255, 255, 255, 0.4);
-        }
-        .search-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 100%;
-            align-items: center; /* Centrar el botón */
-        }
-        .search-bar button {
-            width: 165px;
-            height: 62px;
-            cursor: pointer;
-            color: #ffffff;
-            font-size: 17px;
-            border-radius: 1rem;
-            border: none;
-            position: relative;
-            background: #000000; /* Botón negro */
-            overflow: hidden; /* Para el efecto de borde */
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .search-bar button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0));
-            transition: all 0.5s ease;
-            transform: translate(-50%, -50%) scale(0);
-            z-index: 0;
-        }
-        .search-bar button:hover::before {
-            transform: translate(-50%, -50%) scale(1);
-        }
-        .search-bar button span {
-            position: relative;
-            z-index: 1;
-        }
-        .search-bar button:active {
-            transform: scale(0.9) rotate(3deg);
-        }
-        /* Transición mágica blanca */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.8); /* Blanco semi-transparente */
-            opacity: 0;
-            pointer-events: none;
-            z-index: 1;
-            transition: opacity 0.7s ease; /* Transición más suave */
-        }
-        .overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASCLEPIO SEARCH</title>
+  <style>
+    /* Estilos generales */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+      color: #333333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 800px;
+      width: 90%;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #333333;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #666666;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      animation: slideIn 1s ease-in-out;
+    }
+
+    #search-input {
+      width: 70%;
+      padding: 10px;
+      border: 2px solid #cccccc;
+      border-radius: 5px 0 0 5px;
+      background-color: #f9f9f9;
+      color: #333333;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    #search-button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      background-color: #333333;
+      color: #ffffff;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #search-button:hover {
+      background-color: #555555;
+    }
+
+    .results-container {
+      margin-top: 20px;
+      text-align: left;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .result-item {
+      background-color: #f9f9f9;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .result-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .result-title {
+      font-size: 1.2rem;
+      color: #333333;
+      margin-bottom: 5px;
+    }
+
+    .result-title a {
+      color: #333333;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .result-title a:hover {
+      color: #555555;
+    }
+
+    .result-description {
+      font-size: 1rem;
+      color: #666666;
+    }
+
+    .loading {
+      display: none;
+      font-size: 1.2rem;
+      color: #333333;
+      margin-top: 20px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    /* Animaciones */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="overlay" id="overlay"></div>
-    <div class="container">
-        <div class="logo">A S C L E P I O</div>
-        <div class="input-container">
-            <input type="text" id="searchInput" class="input" required>
-            <label for="searchInput" class="label">Buscar en Google Académico</label>
-        </div>
-        <div class="search-bar">
-            <button onclick="search()"><span>Buscar</span></button>
-        </div>
+  <div class="container">
+    <h1 class="title">ASCLEPIO SEARCH</h1>
+    <p class="subtitle">Busca artículos científicos y más</p>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Escribe tu consulta..." />
+      <button id="search-button">Buscar</button>
     </div>
+    <div id="loading" class="loading"></div>
+    <div id="results-container" class="results-container"></div>
+  </div>
 
-    <script>
-        function search() {
-            var query = document.getElementById('searchInput').value;
-            var searchUrl = 'https://scholar.google.com/scholar?q=' + encodeURIComponent(query);
-            // Mostrar el overlay antes de redirigir
-            var overlay = document.getElementById('overlay');
-            overlay.classList.add('active');
-            setTimeout(function() {
-                window.open(searchUrl, '_blank');
-            }, 700); // Tiempo de transición del overlay
-        }
-    </script>
+  <script>
+    document.getElementById('search-button').addEventListener('click', function () {
+      const query = document.getElementById('search-input').value;
+      if (query.trim() === "") {
+        alert("Por favor, ingresa una consulta.");
+        return;
+      }
+
+      // Limpiar resultados anteriores
+      document.getElementById('results-container').innerHTML = "";
+      const loading = document.getElementById('loading');
+      loading.style.display = "block";
+
+      // Mostrar mensajes de carga
+      loading.textContent = "Filtrando información...";
+      setTimeout(() => {
+        loading.textContent = "Realizando una búsqueda directa...";
+      }, 2000);
+
+      // Hacer la solicitud a la API
+      fetch('https://magicloops.dev/api/loop/a7de156c-3ca6-4a65-8b24-2ba5202f6f54/run', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: query }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          loading.style.display = "none";
+          displayResults(data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          loading.style.display = "none";
+          alert("Hubo un error al realizar la búsqueda.");
+        });
+    });
+
+    function displayResults(data) {
+      const resultsContainer = document.getElementById('results-container');
+
+      if (data && data.length > 0) {
+        data.forEach(item => {
+          const resultItem = document.createElement('div');
+          resultItem.classList.add('result-item');
+
+          const title = document.createElement('div');
+          title.classList.add('result-title');
+          const titleLink = document.createElement('a');
+          titleLink.href = item.link || "#";
+          titleLink.target = "_blank";
+          titleLink.textContent = item.title || "Sin título";
+          title.appendChild(titleLink);
+
+          const description = document.createElement('div');
+          description.classList.add('result-description');
+          description.textContent = item.description || "Sin descripción";
+
+          // Mostrar toda la información de la API
+          const details = document.createElement('pre');
+          details.textContent = JSON.stringify(item, null, 2);
+          details.style.color = "#666666";
+          details.style.fontSize = "0.9rem";
+          details.style.marginTop = "10px";
+
+          resultItem.appendChild(title);
+          resultItem.appendChild(description);
+          resultItem.appendChild(details);
+          resultsContainer.appendChild(resultItem);
+        });
+      } else {
+        resultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
+      }
+    }
+  </script>
 </body>
 </html>
